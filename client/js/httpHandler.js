@@ -15,7 +15,11 @@
       error: error => {console.log(error)}
     });
   };
-  setInterval(ajaxGet, 2000);
+
+  setInterval(ajaxGet, 5000);
+
+
+
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
