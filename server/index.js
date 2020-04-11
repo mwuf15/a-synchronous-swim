@@ -10,7 +10,7 @@ const httpHandler = require('./js/httpHandler');
 keypressHandler.initialize(message =>  {
   messageQueue.enqueue(message);
 
-  httpHandler.initialize(messageQueue);
+  // httpHandler.initialize(messageQueue);
 });
 
 const http = require('http');

@@ -28,9 +28,11 @@ module.exports.router = (req, res, next = ()=>{}) => {
     res.end();
   }
 
+  // queue = ['up'] => []
   if(req.method === 'GET' && req.url === '/') {
     res.writeHead(200, headers);
-    console.log('success => ' , queueMessage.dequeue())
+    // let direction = queueMessage.dequeue();
+    // console.log('success => ' , direction, typeof direction)
     res.end(queueMessage.dequeue());
 
   }

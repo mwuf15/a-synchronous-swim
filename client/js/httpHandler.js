@@ -10,6 +10,7 @@
       type: 'GET',
       url: serverUrl,
       success: directions => {
+        console.log('success')
         SwimTeam.move(directions);
       },
       error: error => {console.log(error)}
