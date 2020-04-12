@@ -21,6 +21,7 @@ let random = function () {//-------mw
 
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  // console.log('modules => ',module.exports.backgroundImageFile);
 
   if(req.method === 'OPTIONS' && req.url === '/') {
     // console.log('end point is test: ')
@@ -28,19 +29,35 @@ module.exports.router = (req, res, next = ()=>{}) => {
     res.end();
   }
 
-  // queue = ['up'] => []
   if(req.method === 'GET' && req.url === '/') {
-    res.writeHead(200, headers);
-    // let direction = queueMessage.dequeue();
-    // console.log('success => ' , direction, typeof direction)
-    res.end(queueMessage.dequeue());
 
+    res.writeHead(200, headers);
+    res.end(queueMessage.dequeue());
+    // res.end(random());
   }
 
-  if(req.method === 'GET' && req.url === '/random') {
-    // console.log('end point random')
-    res.writeHead(200, headers);
-    res.end(random());
+  if(req.method === 'GET' && req.url === '/background.jpg') {
+    //background image
+    //if (req.url === '/')
+    console.log('endpoint for image reached')
+    if (module.exports.backgroundImageFile && module.exports.backgroundImageFile === 'background.jpg') {
+      res.writeHead(200, headers);
+      res.end(module.exports.backgroundImageFile)
+    }else{
+      //else if (req.url === '/background.jpg')
+      fs.readFile (module.exports.backgroundImageFile, (err, data) =>{
+        if (err) {
+          res.writeHead(404,headers);
+        } else {
+          res.writeHead(202,headers);
+          res.write(data,'binary');
+          }
+          res.end();
+          next();
+      })
+      // res.writeHead(404, headers);
+      // res.end();
+    }
   }
 
 

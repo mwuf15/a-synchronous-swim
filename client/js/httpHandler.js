@@ -10,18 +10,31 @@
       type: 'GET',
       url: serverUrl,
       success: directions => {
-        console.log('success')
         SwimTeam.move(directions);
+      },
+      complete: () => {
+        setTimeout(ajaxGet, 1000);
       },
       error: error => {console.log(error)}
     });
   };
 
-  setInterval(ajaxGet, 5000);
+  ajaxGet();
 
 
+const fetchImage = () => {
+  $.ajax({
+    type: 'GET',
+    url: serverUrl + '/background.jpg',
+    success: image => {
+      console.log('this image from fetch => ', image);
+      $('.pool').css('background-image', image);
+    },
+    error: error => { console.log(error) }
+  });
+}
 
-
+fetchImage();
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -33,13 +46,16 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'http://127.0.0.1:8080/',
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
       success: () => {
         // reload the page
         window.location = window.location.href;
+      },
+      error: (error) => {
+        console.log(error)
       }
     });
   };
