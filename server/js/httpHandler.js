@@ -5,7 +5,7 @@ const multipart = require('./multipartUtils');
 const queueMessage = require('./messageQueue');
 
 // Path for the background image ///////////////////////
-module.exports.backgroundImageFile = path.join('.', 'background.jpg');
+module.exports.backgroundImageFile = path.join('.', 'water-lg.jpg');
 ////////////////////////////////////////////////////////
 
 let messageQueue = null;
@@ -40,7 +40,7 @@ module.exports.router = (req, res, next = ()=>{}) => {
     //background image
     //if (req.url === '/')
     console.log('endpoint for image reached')
-    if (module.exports.backgroundImageFile && module.exports.backgroundImageFile === 'background.jpg') {
+    if (module.exports.backgroundImageFile && module.exports.backgroundImageFile === 'water-lg.jpg') {
       res.writeHead(200, headers);
       res.end(module.exports.backgroundImageFile)
     }else{
@@ -60,6 +60,25 @@ module.exports.router = (req, res, next = ()=>{}) => {
     }
   }
 
+  if (req.method === 'POST' && req.url === '/background.jpg') {
+      let imageData = Buffer.alloc(0);
 
+      req.on('data', (chunk) => {
+        imageData = Buffer.concat ([imageData, chunk]);
+      });
+
+      req.on('end', () => {
+        let file = multipart.getFile (imageData);
+        fs.writeFile(module.exports.backgroundImageFile, file.data, (err) => {
+          if(err) {
+            res.writeHead(400, headers);
+          }else {
+            res.writeHead(201, headers);
+          }
+          res.end();
+
+        })
+      })
+  }
   next(); // invoke next() at the end of a request to help with testing!
 };

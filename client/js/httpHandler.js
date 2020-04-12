@@ -6,14 +6,14 @@
   // TODO: build the swim command fetcher here
   //
   const ajaxGet = () => {
-    $.ajax({
+    $.get({
       type: 'GET',
       url: serverUrl,
       success: directions => {
         SwimTeam.move(directions);
       },
       complete: () => {
-        setTimeout(ajaxGet, 1000);
+        setTimeout(ajaxGet, 25);
       },
       error: error => {console.log(error)}
     });
@@ -28,7 +28,7 @@ const fetchImage = () => {
     url: serverUrl + '/background.jpg',
     success: image => {
       console.log('this image from fetch => ', image);
-      $('.pool').css('background-image', image);
+      $('.pool').css('background-image', `url('${image}')`);
     },
     error: error => { console.log(error) }
   });
