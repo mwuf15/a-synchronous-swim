@@ -5,17 +5,19 @@
   //
   // TODO: build the swim command fetcher here
   const ajaxFileReceived = () => {
-    const direction = ['left', 'right', 'up', 'down'];
-    const directionData = (direction) => {
-      const random = Math.floor(Math.random() * direction.length);
-      return direction[random];
-    }
+    // const direction = ['left', 'right', 'up', 'down'];
+    // const directionData = (direction) => {
+    //   const random = Math.floor(Math.random() * direction.length);
+    //   return direction[random];
+    // }
     $.ajax({
       type: 'GET',
       url: serverUrl,
-      success: data => {
+      success: (data) => {
         console.log('this is data from success:', data)
-        SwimTeam.move(data)
+        // console.log('this is img from success:', img)
+        SwimTeam.move(data);
+
       },
       error: (data) => {
         console.log('failed to get data : ', data)
@@ -24,6 +26,22 @@
   }
   //
   setInterval(ajaxFileReceived, 5000);
+  // ajaxFileReceived();
+  const fetchImage = () => {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl + '/background.jpg',
+      success: (data) => {
+        console.log('this is img from success:', data)
+        // console.log('this is img from success:', img)
+        // SwimTeam.move(data);
+      },
+      error: (data) => {
+        console.log('failed to get data : ', data)
+      }
+    });
+  }
+  fetchImage();
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -35,7 +53,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: serverUrl,
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
