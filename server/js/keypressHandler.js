@@ -19,7 +19,10 @@ const logKeypress = (key) => {
     process.stdout.write(key);
   }
 };
-
+const directionData = (validMessages) => {
+  const random = Math.floor(Math.random() * validMessages.length);
+  return validMessages[random];
+}
 ///////////////////////////////////////////////////////////////////////////////
 // Keypress Handler ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,7 +43,7 @@ module.exports.initialize = (callback) => {
       callback(key.name);
       return; // don't do any more processing on this key
     }
-    
+
     // otherwise build up a message from individual characters
     if (key && (key.name === 'return' || key.name === 'enter')) {
       // on enter, process the message
